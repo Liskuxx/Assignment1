@@ -3,8 +3,8 @@ public class Student {
 	public int id;
 	public String firstName;
 	public String lastName;
-	public AssignmentMarks mathMarks;
-	public AssignmentMarks englishMarks;
+	public AssignmentMarks mathMarks = new AssignmentMarks("", 0, 0, 0);
+	public AssignmentMarks englishMarks = new AssignmentMarks("", 0, 0, 0);
 	
 	//Methods
 	
