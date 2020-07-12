@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		readFile("C:\\Users\\lelea\\Desktop\\Course\\Programming 1/test.txt");
-		
+		displayReportByMarks();
 	}
 	
 	//Methods
@@ -59,5 +59,29 @@ public class Main {
 		student.englishMarks.setMark(2, englishMark2);
 		student.englishMarks.setMark(3, englishMark3);
 		students.addLast(student);
+	}
+	
+	//GUI
+	
+	//Display information
+	private static void displayReportByMarks() {
+		//Header
+		System.out.println("Name\t\t\tMaths\tA1\tA2\tA3\tGrade\t\tEnglish\tA1\tA2\tA3\tGrade");
+		for(int x = 0; x < 110; x++) { System.out.print("-"); }
+		System.out.println("-");
+		//Display student information
+		int i = 0;
+		for (int x = 0; x < students.size(); x++) {
+		//Counter		
+		Student currentStudentInfo = students.get(i);
+		System.out.print(currentStudentInfo.getFullName());
+		//Print full name and stop in correct position
+		for(int y = 0; y < (32-currentStudentInfo.getFullName().length()); y++) { System.out.print(" "); }
+		//Show math marks
+		System.out.print(currentStudentInfo.mathMarks.getMark(1) + "\t" + currentStudentInfo.mathMarks.getMark(2) + "\t" + currentStudentInfo.mathMarks.getMark(3) + "\t" + currentStudentInfo.mathMarks.getAverageGrade());
+		System.out.print("\t\t\t" + currentStudentInfo.englishMarks.getMark(1) + "\t" + currentStudentInfo.englishMarks.getMark(2) + "\t" + currentStudentInfo.englishMarks.getMark(3) + "\t" + currentStudentInfo.englishMarks.getAverageGrade());
+		System.out.println("");
+		i++;
+		}
 	}
 }
