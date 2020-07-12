@@ -3,15 +3,16 @@ import java.io.FileInputStream;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
-import java.util.LinkedList;
 
 public class Main {
 	//Variables
 	public static LinkedList<Student> students = new LinkedList<Student>();
+	public static Scanner scanner = new Scanner(System.in);
 
+	//Main method
 	public static void main(String[] args) {
 		readFile("C:\\Users\\lelea\\Desktop\\Course\\Programming 1/test.txt");
-		displayReportByMarks();
+		displayMenu();
 	}
 	
 	//Methods
@@ -64,24 +65,75 @@ public class Main {
 	//GUI
 	
 	//Display information
-	private static void displayReportByMarks() {
-		//Header
-		System.out.println("Name\t\t\tMaths\tA1\tA2\tA3\tGrade\t\tEnglish\tA1\tA2\tA3\tGrade");
-		for(int x = 0; x < 110; x++) { System.out.print("-"); }
-		System.out.println("-");
-		//Display student information
-		int i = 0;
-		for (int x = 0; x < students.size(); x++) {
-		//Counter		
-		Student currentStudentInfo = students.get(i);
-		System.out.print(currentStudentInfo.getFullName());
-		//Print full name and stop in correct position
-		for(int y = 0; y < (32-currentStudentInfo.getFullName().length()); y++) { System.out.print(" "); }
-		//Show math marks
-		System.out.print(currentStudentInfo.mathMarks.getMark(1) + "\t" + currentStudentInfo.mathMarks.getMark(2) + "\t" + currentStudentInfo.mathMarks.getMark(3) + "\t" + currentStudentInfo.mathMarks.getAverageGrade());
-		System.out.print("\t\t\t" + currentStudentInfo.englishMarks.getMark(1) + "\t" + currentStudentInfo.englishMarks.getMark(2) + "\t" + currentStudentInfo.englishMarks.getMark(3) + "\t" + currentStudentInfo.englishMarks.getAverageGrade());
-		System.out.println("");
-		i++;
+		private static void displayReport(String type) {
+			//Header
+			System.out.println("Name\t\t\tMaths\tA1\tA2\tA3\t\tEnglish\tA1\tA2\tA3");
+			for(int x = 0; x < 110; x++) { System.out.print("-"); }
+			System.out.println("-");
+			//Display student information
+			int i = 0;
+			switch(type) {
+			case "marks":				
+				for (int x = 0; x < students.size(); x++) {
+				//Counter		
+				Student currentStudentInfo = students.get(i);
+				System.out.print(currentStudentInfo.getFullName());
+				//Print full name and stop in correct position
+				for(int y = 0; y < (32-currentStudentInfo.getFullName().length()); y++) { System.out.print(" "); }
+				//Show math marks
+				System.out.print(currentStudentInfo.mathMarks.getMark(1) + "\t" + currentStudentInfo.mathMarks.getMark(2) + "\t" + currentStudentInfo.mathMarks.getMark(3));
+				//Show english marks
+				System.out.print("\t\t\t" + currentStudentInfo.englishMarks.getMark(1) + "\t" + currentStudentInfo.englishMarks.getMark(2) + "\t" + currentStudentInfo.englishMarks.getMark(3));
+				System.out.println("");
+				i++;
+				}
+				break;
+			case "grade":				
+				for (int x = 0; x < students.size(); x++) {
+				//Counter		
+				Student currentStudentInfo = students.get(i);
+				System.out.print(currentStudentInfo.getFullName());
+				//Print full name and stop in correct position
+				for(int y = 0; y < (32-currentStudentInfo.getFullName().length()); y++) { System.out.print(" "); }
+				//Show math marks
+				System.out.print(currentStudentInfo.mathMarks.getGrade(1) + "\t" + currentStudentInfo.mathMarks.getGrade(2) + "\t" + currentStudentInfo.mathMarks.getGrade(3));
+				//Show english marks
+				System.out.print("\t\t\t" + currentStudentInfo.englishMarks.getGrade(1) + "\t" + currentStudentInfo.englishMarks.getGrade(2) + "\t" + currentStudentInfo.englishMarks.getGrade(3));
+				System.out.println("");
+				i++;
+				}
+				break;
+			}
+			
 		}
-	}
+		
+		//Menu
+		
+		//Display menu
+		private static void displayMenu() {
+			System.out.println("Student Report System");
+			for(int x = 0; x <= 20; x++) { System.out.print("-"); }
+			System.out.println("-");
+			System.out.println("1) Display student marks");
+			System.out.println("2) Display student grades");
+			System.out.println("3) Add new student");
+			System.out.println("4) Remove student");
+			System.out.println("5) Exit");
+		}
+		
+		//User input
+		private static int selectMenuOption() {
+			String userInput = scanner.nextLine();
+			try {				
+				if(Integer.parseInt(userInput) <= 5 && Integer.parseInt(userInput) >= 1) { return Integer.parseInt(userInput); } else {
+					System.out.println("Invalid option, please enter a value from 1 to 5.");					
+				}
+			} catch(NumberFormatException e) {
+				System.out.println("Invalid option, please enter a value from 1 to 5.");
+			}
+			//Stops error, change this in future
+			return 0;
+		}
+		
+		 
 }
