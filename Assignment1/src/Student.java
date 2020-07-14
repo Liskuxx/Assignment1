@@ -21,4 +21,10 @@ public class Student {
 		String fullName = firstName + " " + lastName;
 		return fullName;
 	}
+	
+	//Return ID
+	public int getID() {
+		int ID = id;
+		return ID;
+	}
 }

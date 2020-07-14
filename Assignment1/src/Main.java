@@ -8,11 +8,34 @@ public class Main {
 	//Variables
 	public static LinkedList<Student> students = new LinkedList<Student>();
 	public static Scanner scanner = new Scanner(System.in);
+	
 
 	//Main method
 	public static void main(String[] args) {
 		readFile("C:\\Users\\lelea\\Desktop\\Course\\Programming 1/test.txt");
-		displayMenu();
+		
+		boolean runMainLoop = true;
+		while(runMainLoop) {
+				displayMenu("main");
+				int choice = selectMenuOption();
+				switch (choice) {
+				case 1:
+					displayReport("marks");
+					break;
+				case 2:
+					displayReport("grade");
+					break;
+				case 3:
+					addNewStudent();
+					break;
+				case 4:
+					//removeStudent();
+					break;
+				case 5:
+					runMainLoop = false;
+					break;
+				}
+		}
 	}
 	
 	//Methods
@@ -62,6 +85,66 @@ public class Main {
 		students.addLast(student);
 	}
 	
+	//Modifications to list
+	
+	//Add new student
+	private static void addNewStudent() {		
+		boolean finished = false;
+		while(!finished) {
+		//No menu being drawn as it is going to be kind of dynamic and requires logic that makes more sense to just keep it all together
+		System.out.println("Student Report System");
+		for(int x = 0; x <= 20; x++) { System.out.print("-"); }
+		System.out.println("-");
+		System.out.print("Please enter the students ID here: ");
+		int ID = scanner.nextInt();
+		System.out.print("Please enter the students first name here: ");
+		String fName = scanner.nextLine();
+		System.out.print("Please enter the students last name here: ");
+		String lName = scanner.nextLine();		
+		System.out.print("Please enter the students grade for maths assignment 1 here: ");
+		int math1 = scanner.nextInt();
+		System.out.print("Please enter the students grade for maths assignment 2 here: ");
+		int math2 = scanner.nextInt();
+		System.out.print("Please enter the students grade for maths assignment 3 here: ");
+		int math3 = scanner.nextInt();
+		System.out.print("Please enter the students grade for English assignment 1 here: ");
+		int english1 = scanner.nextInt();
+		System.out.print("Please enter the students grade for English assignment 2 here: ");
+		int english2 = scanner.nextInt();
+		System.out.print("Please enter the students grade for English assignment 3 here: ");
+		int english3 = scanner.nextInt();
+		
+		//Validation of data
+		
+		//Make sure ID is unique
+		for (int x = 0; x < students.size(); x++) {
+			//Counter
+			int i = 0;
+			Student currentIdCheck = students.get(i);
+			int currentId = currentIdCheck.getID();
+			if (currentId != ID) { 
+				//Create student object
+				Student newStudent = new Student(ID, fName, lName); 
+				newStudent.mathMarks.setMark(1, math1);
+				newStudent.mathMarks.setMark(2, math2);
+				newStudent.mathMarks.setMark(3, math3);
+				newStudent.englishMarks.setMark(1,  english1);
+				newStudent.englishMarks.setMark(2,  english2);
+				newStudent.englishMarks.setMark(3,  english3);
+				
+				//Add to the list
+				students.add(newStudent);
+				finished = true;
+			} else {
+				System.out.println("Id already in use, please pick another"); 
+			}
+			i++;
+		}
+		
+		}
+		
+	}
+	
 	//GUI
 	
 	//Display information
@@ -104,21 +187,30 @@ public class Main {
 				}
 				break;
 			}
+			System.out.println("\nEnter any letter and press enter to return to the main menu..");
+			scanner.nextLine();
 			
 		}
 		
 		//Menu
 		
 		//Display menu
-		private static void displayMenu() {
+		private static void displayMenu(String Menu) {
 			System.out.println("Student Report System");
 			for(int x = 0; x <= 20; x++) { System.out.print("-"); }
 			System.out.println("-");
-			System.out.println("1) Display student marks");
-			System.out.println("2) Display student grades");
-			System.out.println("3) Add new student");
-			System.out.println("4) Remove student");
-			System.out.println("5) Exit");
+			switch (Menu) {
+			case "main":				
+				System.out.println("1) Display student marks");
+				System.out.println("2) Display student grades");
+				System.out.println("3) Add new student");
+				System.out.println("4) Remove student");
+				System.out.println("5) Exit");
+				break;
+			case "removeStudent":
+				System.out.print("Please enter the students ID of which you wish to remove: ");
+				break;
+			}			
 		}
 		
 		//User input
@@ -131,6 +223,7 @@ public class Main {
 			} catch(NumberFormatException e) {
 				System.out.println("Invalid option, please enter a value from 1 to 5.");
 			}
+			
 			//Stops error, change this in future
 			return 0;
 		}
