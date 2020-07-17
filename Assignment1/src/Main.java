@@ -29,7 +29,7 @@ public class Main {
 					addNewStudent();
 					break;
 				case 4:
-					//removeStudent();
+					removeStudent();
 					break;
 				case 5:
 					runMainLoop = false;
@@ -98,9 +98,9 @@ public class Main {
 		System.out.print("Please enter the students ID here: ");
 		int ID = scanner.nextInt();
 		System.out.print("Please enter the students first name here: ");
-		String fName = scanner.nextLine();
+		String fName = scanner.next();
 		System.out.print("Please enter the students last name here: ");
-		String lName = scanner.nextLine();		
+		String lName = scanner.next();		
 		System.out.print("Please enter the students grade for maths assignment 1 here: ");
 		int math1 = scanner.nextInt();
 		System.out.print("Please enter the students grade for maths assignment 2 here: ");
@@ -144,6 +144,28 @@ public class Main {
 		}
 		
 	}
+	
+	//Delete student from list
+	private static void removeStudent() {
+		int idToRemove;
+		System.out.println("Please enter the ID of the student you would like to remove");
+		idToRemove = scanner.nextInt();
+		
+		student studentToRemove;
+		
+		//Counter
+		int z = 0;
+		
+		while(z<students.size()) {
+			student currentStudentCheck = students.get(z);
+			if (currentStudentCheck.getId() == idToRemove) [
+				students.remove(z);
+				z = students.size() + 1;		
+			}
+			z++;	
+		}
+	}
+	
 	
 	//GUI
 	
