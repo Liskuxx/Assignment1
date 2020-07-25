@@ -24,7 +24,6 @@ public class Student {
 	
 	//Return ID
 	public int getID() {
-		int ID = id;
-		return ID;
+		return id;
 	}
 }

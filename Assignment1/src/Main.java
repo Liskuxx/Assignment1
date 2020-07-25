@@ -30,6 +30,8 @@ public class Main {
 					break;
 				case 4:
 					removeStudent();
+					System.out.println("\nEnter any letter and press enter to return to the main menu..");
+					scanner.nextLine();
 					break;
 				case 5:
 					runMainLoop = false;
@@ -123,18 +125,11 @@ public class Main {
 			Student currentIdCheck = students.get(i);
 			int currentId = currentIdCheck.getID();
 			if (currentId != ID) { 
-				//Create student object
-				Student newStudent = new Student(ID, fName, lName); 
-				newStudent.mathMarks.setMark(1, math1);
-				newStudent.mathMarks.setMark(2, math2);
-				newStudent.mathMarks.setMark(3, math3);
-				newStudent.englishMarks.setMark(1,  english1);
-				newStudent.englishMarks.setMark(2,  english2);
-				newStudent.englishMarks.setMark(3,  english3);
-				
-				//Add to the list
-				students.add(newStudent);
+				addStudent(ID, fName, lName, math1, math2, math3, english1, english2, english3);				
 				finished = true;
+				System.out.println("\nEnter any letter and press enter to return to the main menu..");
+				scanner.nextLine();
+				break;
 			} else {
 				System.out.println("Id already in use, please pick another"); 
 			}
@@ -151,21 +146,19 @@ public class Main {
 		System.out.println("Please enter the ID of the student you would like to remove");
 		idToRemove = scanner.nextInt();
 		
-		student studentToRemove;
-		
 		//Counter
 		int z = 0;
-		
-		while(z<students.size()) {
-			student currentStudentCheck = students.get(z);
-			if (currentStudentCheck.getId() == idToRemove) [
+		for (int x = 0; x < students.size(); x++) {
+			Student currentStudentCheck = students.get(z);
+			if (currentStudentCheck.getID() == idToRemove) {
 				students.remove(z);
-				z = students.size() + 1;		
+				System.out.println("Student removed");
+				break;
 			}
-			z++;	
+				
 		}
-	}
-	
+		
+	}	
 	
 	//GUI
 	
@@ -237,6 +230,7 @@ public class Main {
 		
 		//User input
 		private static int selectMenuOption() {
+			System.out.println("");
 			String userInput = scanner.nextLine();
 			try {				
 				if(Integer.parseInt(userInput) <= 5 && Integer.parseInt(userInput) >= 1) { return Integer.parseInt(userInput); } else {
