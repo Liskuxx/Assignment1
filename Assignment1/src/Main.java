@@ -145,13 +145,12 @@ public class Main {
 		int idToRemove;
 		System.out.println("Please enter the ID of the student you would like to remove");
 		idToRemove = scanner.nextInt();
-		
+		Student currentStudentCheck;
 		//Counter
-		int z = 0;
 		for (int x = 0; x < students.size(); x++) {
-			Student currentStudentCheck = students.get(z);
+			currentStudentCheck = students.get(x);
 			if (currentStudentCheck.getID() == idToRemove) {
-				students.remove(z);
+				students.remove(x);
 				System.out.println("Student removed");
 				break;
 			}
