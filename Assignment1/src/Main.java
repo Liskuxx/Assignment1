@@ -30,8 +30,6 @@ public class Main {
 					break;
 				case 4:
 					removeStudent();
-					System.out.println("\nEnter any letter and press enter to return to the main menu..");
-					scanner.nextLine();
 					break;
 				case 5:
 					runMainLoop = false;
@@ -156,7 +154,8 @@ public class Main {
 			}
 				
 		}
-		
+		System.out.println("\nEnter any letter and press enter to return to the main menu..");
+		scanner.nextLine();		
 	}	
 	
 	//GUI
