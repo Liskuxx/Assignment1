@@ -12,7 +12,7 @@ public class Main {
 
 	//Main method
 	public static void main(String[] args) {
-		readFile("C:\\Users\\lelea\\Desktop\\Course\\Programming 1/test.txt");
+		readFile("C:\\Users\\lelea\\Desktop\\Course\\Programming 1/studentdata.txt");
 		
 		boolean runMainLoop = true;
 		while(runMainLoop) {
@@ -90,48 +90,70 @@ public class Main {
 	//Add new student
 	private static void addNewStudent() {		
 		boolean finished = false;
+		int math1 = 0, math2 = 0, math3 = 0, english1 = 0, english2 = 0, english3 = 0;
+		String fName, lName;
 		while(!finished) {
-		//No menu being drawn as it is going to be kind of dynamic and requires logic that makes more sense to just keep it all together
 		System.out.println("Student Report System");
 		for(int x = 0; x <= 20; x++) { System.out.print("-"); }
 		System.out.println("-");
 		System.out.print("Please enter the students ID here: ");
-		int ID = scanner.nextInt();
-		System.out.print("Please enter the students first name here: ");
-		String fName = scanner.next();
-		System.out.print("Please enter the students last name here: ");
-		String lName = scanner.next();		
-		System.out.print("Please enter the students grade for maths assignment 1 here: ");
-		int math1 = scanner.nextInt();
-		System.out.print("Please enter the students grade for maths assignment 2 here: ");
-		int math2 = scanner.nextInt();
-		System.out.print("Please enter the students grade for maths assignment 3 here: ");
-		int math3 = scanner.nextInt();
-		System.out.print("Please enter the students grade for English assignment 1 here: ");
-		int english1 = scanner.nextInt();
-		System.out.print("Please enter the students grade for English assignment 2 here: ");
-		int english2 = scanner.nextInt();
-		System.out.print("Please enter the students grade for English assignment 3 here: ");
-		int english3 = scanner.nextInt();
-		
-		//Validation of data
-		
-		//Make sure ID is unique
+		int ID = scanner.nextInt();		
 		for (int x = 0; x < students.size(); x++) {
 			//Counter
 			int i = 0;
 			Student currentIdCheck = students.get(i);
 			int currentId = currentIdCheck.getID();
 			if (currentId != ID) { 
-				addStudent(ID, fName, lName, math1, math2, math3, english1, english2, english3);				
-				finished = true;
-				System.out.println("\nEnter any letter and press enter to return to the main menu..");
-				scanner.nextLine();
-				break;
+		System.out.print("Please enter the students first name here: ");		
+		fName = scanner.next();
+		System.out.print("Please enter the students last name here: ");
+		lName = scanner.next();		
+		System.out.print("Please enter the students grade for maths assignment 1 here: ");
+		try {
+			math1 = scanner.nextInt();
+			} catch(Exception e) {
+			System.out.println("Please enter a valid grade.");
+			}
+		System.out.print("Please enter the students grade for maths assignment 2 here: ");
+		try {
+			math2 = scanner.nextInt();
+			} catch(Exception e) {
+				System.out.println("Please enter a valid grade.");
+			}
+		System.out.print("Please enter the students grade for maths assignment 3 here: ");
+		try {
+			math3 = scanner.nextInt();
+			} catch(Exception e) {
+				System.out.println("Please enter a valid grade.");
+			}
+		System.out.print("Please enter the students grade for English assignment 1 here: ");
+		try {
+			english1 = scanner.nextInt();
+			} catch(Exception e) {
+				System.out.println("Please enter a valid grade.");
+			}
+		System.out.print("Please enter the students grade for English assignment 2 here: ");
+		try {
+			english2 = scanner.nextInt();
+			} catch(Exception e) {
+				System.out.println("Please enter a valid grade.");
+			}
+		System.out.print("Please enter the students grade for English assignment 3 here: ");
+		try {
+			english3 = scanner.nextInt();
+			} catch(Exception e) {
+				System.out.println("Please enter a valid grade.");
+			}
 			} else {
 				System.out.println("Id already in use, please pick another"); 
+				break;
 			}
-			i++;
+			i++;			
+			addStudent(ID, fName, lName, math1, math2, math3, english1, english2, english3);				
+			finished = true;			
+			System.out.println("\nEnter any letter and press enter to return to the main menu..");
+			scanner.next();
+			break;
 		}
 		
 		}
@@ -155,7 +177,7 @@ public class Main {
 				
 		}
 		System.out.println("\nEnter any letter and press enter to return to the main menu..");
-		scanner.nextLine();		
+		scanner.next();		
 	}	
 	
 	//GUI
@@ -201,7 +223,7 @@ public class Main {
 				break;
 			}
 			System.out.println("\nEnter any letter and press enter to return to the main menu..");
-			scanner.nextLine();
+			scanner.next();
 			
 		}
 		
@@ -229,7 +251,7 @@ public class Main {
 		//User input
 		private static int selectMenuOption() {
 			System.out.println("");
-			String userInput = scanner.nextLine();
+			String userInput = scanner.next();
 			try {				
 				if(Integer.parseInt(userInput) <= 5 && Integer.parseInt(userInput) >= 1) { return Integer.parseInt(userInput); } else {
 					System.out.println("Invalid option, please enter a value from 1 to 5.");					
