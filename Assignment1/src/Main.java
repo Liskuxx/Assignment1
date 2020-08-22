@@ -14,7 +14,7 @@ public class Main {
 
 	//Main method
 	public static void main(String[] args) {
-		readFile("C:\\Users\\lelea\\Desktop\\Course\\Programming 1/studentdata.txt");
+		readFile("C:\\studentdata.txt");//Unsure where data should be read from as course didn't specify, assuming that student data is put straight into c drive however this can be changed accordingly.
 		
 		boolean runMainLoop = true;
 		while(runMainLoop) {
