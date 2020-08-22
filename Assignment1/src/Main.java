@@ -1,4 +1,6 @@
+import java.io.Console;
 import java.io.File;
+import java.util.ArrayList;
 import java.io.FileInputStream;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
@@ -44,7 +46,6 @@ public class Main {
 	public  static  boolean  readFile(String filename) {
 			File file = new File(filename);
 			int i = 0;
-			boolean space = false;
 	 		try { 
 	 			Scanner scanner = new Scanner(file);
 	 			while(scanner.hasNextLine()){	 				
@@ -60,7 +61,6 @@ public class Main {
 	 				int englishMark3 = Integer.parseInt(words[8]);	 				
 	 				addStudent(id,firstName,lastName,mathMark1,mathMark2,mathMark3,englishMark1,englishMark2,englishMark3);		 				
 	 				i++;	
-	 				space = false;
 	 			} 
 	 			scanner.close(); 
 	 			} catch (FileNotFoundException e) { 
@@ -88,77 +88,87 @@ public class Main {
 	//Modifications to list
 	
 	//Add new student
-	private static void addNewStudent() {		
+	private static void addNewStudent() {	
+		//Create needed vars
 		boolean finished = false;
-		int math1 = 0, math2 = 0, math3 = 0, english1 = 0, english2 = 0, english3 = 0;
+		int math1 = 0, math2 = 0, math3 = 0, english1 = 0, english2 = 0, english3 = 0, ID = 0, currentId = 0, i = 0;
 		String fName, lName;
-		while(!finished) {
-		System.out.println("Student Report System");
-		for(int x = 0; x <= 20; x++) { System.out.print("-"); }
-		System.out.println("-");
+		boolean idOkay = false;
+		//Loop for error checking
+		while(!finished) {		
 		System.out.print("Please enter the students ID here: ");
-		int ID = scanner.nextInt();		
+		Scanner idInput = new Scanner(System.in);
+        while (!idInput.hasNextInt() ) {
+        	//Get ID
+        	idInput = new Scanner(System.in);
+            System.out.println("Please only enter numbers that haven't been used in past ids.");
+            System.out.print("Please enter the students ID here: ");            
+        }            
+        ID = idInput.nextInt();     
+		//Error check ID
 		for (int x = 0; x < students.size(); x++) {
 			//Counter
-			int i = 0;
-			Student currentIdCheck = students.get(i);
-			int currentId = currentIdCheck.getID();
-			if (currentId != ID) { 
-		System.out.print("Please enter the students first name here: ");		
-		fName = scanner.next();
-		System.out.print("Please enter the students last name here: ");
-		lName = scanner.next();		
-		System.out.print("Please enter the students grade for maths assignment 1 here: ");
-		try {
-			math1 = scanner.nextInt();
-			} catch(Exception e) {
-			System.out.println("Please enter a valid grade.");
-			}
-		System.out.print("Please enter the students grade for maths assignment 2 here: ");
-		try {
-			math2 = scanner.nextInt();
-			} catch(Exception e) {
-				System.out.println("Please enter a valid grade.");
-			}
-		System.out.print("Please enter the students grade for maths assignment 3 here: ");
-		try {
-			math3 = scanner.nextInt();
-			} catch(Exception e) {
-				System.out.println("Please enter a valid grade.");
-			}
-		System.out.print("Please enter the students grade for English assignment 1 here: ");
-		try {
-			english1 = scanner.nextInt();
-			} catch(Exception e) {
-				System.out.println("Please enter a valid grade.");
-			}
-		System.out.print("Please enter the students grade for English assignment 2 here: ");
-		try {
-			english2 = scanner.nextInt();
-			} catch(Exception e) {
-				System.out.println("Please enter a valid grade.");
-			}
-		System.out.print("Please enter the students grade for English assignment 3 here: ");
-		try {
-			english3 = scanner.nextInt();
-			} catch(Exception e) {
-				System.out.println("Please enter a valid grade.");
-			}
+			Student currentIdCheck = students.get(x);
+			currentId = currentIdCheck.getID();
+			if (currentId != ID) {
+				idOkay = true;
 			} else {
-				System.out.println("Id already in use, please pick another"); 
-				break;
+				idOkay = false;
+				System.out.println("Please only enter numbers that haven't been used in past ids.");
+				addNewStudent();
 			}
-			i++;			
+		}
+			if (idOkay) { 	
+				//Get names
+				System.out.print("Please enter the students first name here: ");		
+				fName = scanner.next();
+				System.out.print("Please enter the students last name here: ");
+				lName = scanner.next();		
+				
+				//Get grades
+				ArrayList<Integer> allGrades = new ArrayList<Integer>();
+				
+				int counter = 0;
+
+		        while (counter < 6) {
+		        	if (counter < 3) {
+		        		System.out.println("Please Enter Students Grade for Maths Assisgnment "+(counter + 1));
+		        	} else {
+		        		System.out.println("Please Enter Students Grade for English Assisgnment "+(counter - 2));
+		        	}
+		            
+		            Scanner gradeInput = new Scanner(System.in);
+
+		            if (!gradeInput.hasNextInt()) {
+		                System.out.println("Please Only Enter Numbers.");
+		            } else {
+		                counter++;
+		                allGrades.add(gradeInput.nextInt());
+		            }
+		        }
+			
+	        //Assign vars values
+	        math1 = allGrades.get(0);
+	        math2 = allGrades.get(1);
+	        math3 = allGrades.get(2);
+	        
+	        english1 = allGrades.get(3);
+	        english2 = allGrades.get(4);
+	        english3 = allGrades.get(5);
+	        
+			//Finally add the student to the list
 			addStudent(ID, fName, lName, math1, math2, math3, english1, english2, english3);				
 			finished = true;			
 			System.out.println("\nEnter any letter and press enter to return to the main menu..");
 			scanner.next();
 			break;
+			}
+			System.out.println("Please only enter numbers that haven't been used in past ids.");
+			break;
+		}
 		}
 		
-		}
-		
-	}
+	
 	
 	//Delete student from list
 	private static void removeStudent() {
@@ -173,11 +183,15 @@ public class Main {
 				students.remove(x);
 				System.out.println("Student removed");
 				break;
+			} else {
+				System.out.println("Student ID doesn't exist!");
+				break;
 			}
 				
 		}
 		System.out.println("\nEnter any letter and press enter to return to the main menu..");
-		scanner.next();		
+		scanner.next();	
+		return;
 	}	
 	
 	//GUI
@@ -200,7 +214,7 @@ public class Main {
 				for(int y = 0; y < (32-currentStudentInfo.getFullName().length()); y++) { System.out.print(" "); }
 				//Show math marks
 				System.out.print(currentStudentInfo.mathMarks.getMark(1) + "\t" + currentStudentInfo.mathMarks.getMark(2) + "\t" + currentStudentInfo.mathMarks.getMark(3));
-				//Show english marks
+				//Show English marks
 				System.out.print("\t\t\t" + currentStudentInfo.englishMarks.getMark(1) + "\t" + currentStudentInfo.englishMarks.getMark(2) + "\t" + currentStudentInfo.englishMarks.getMark(3));
 				System.out.println("");
 				i++;
@@ -215,7 +229,7 @@ public class Main {
 				for(int y = 0; y < (32-currentStudentInfo.getFullName().length()); y++) { System.out.print(" "); }
 				//Show math marks
 				System.out.print(currentStudentInfo.mathMarks.getGrade(1) + "\t" + currentStudentInfo.mathMarks.getGrade(2) + "\t" + currentStudentInfo.mathMarks.getGrade(3));
-				//Show english marks
+				//Show English marks
 				System.out.print("\t\t\t" + currentStudentInfo.englishMarks.getGrade(1) + "\t" + currentStudentInfo.englishMarks.getGrade(2) + "\t" + currentStudentInfo.englishMarks.getGrade(3));
 				System.out.println("");
 				i++;
@@ -258,9 +272,8 @@ public class Main {
 				}
 			} catch(NumberFormatException e) {
 				System.out.println("Invalid option, please enter a value from 1 to 5.");
-			}
-			
-			//Stops error, change this in future
+			}			
+			//Stops error
 			return 0;
 		}
 		

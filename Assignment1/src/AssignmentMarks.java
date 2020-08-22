@@ -93,7 +93,7 @@ public class AssignmentMarks {
 		} else if (mark >= 95 && mark <= 100) {
 			return "A+";
 		} 
-		return "";//This is to stop the program thinking there's a chance nothing will be returned. Figure out how to remove this error
+		return "";//This is to stop the program thinking there's a chance nothing will be returned
 	}
 	
 	//Return grade of assignment
@@ -113,7 +113,7 @@ public class AssignmentMarks {
 		default:
 			//Error, mostly for debugging, shouldn't run in final version
 			System.out.println("Attempt to get a grade for an assignment that doesn't exist.");
-			return "Error";//Maybe change this to return something better
+			return "Error";
 		}
 		return markToGrade(mark);
 	}
